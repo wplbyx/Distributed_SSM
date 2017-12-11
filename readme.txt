@@ -1,0 +1,1 @@
+Distributed_SSM 是一个 Maven pom 聚合工程，是一个父工程(跟工程)，只是用来定义依赖的 jar 包的！
