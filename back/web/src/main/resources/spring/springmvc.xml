@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+	    http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context
+		http://www.springframework.org/schema/context/spring-context.xsd
+		http://www.springframework.org/schema/mvc
+		http://www.springframework.org/schema/mvc/spring-mvc.xsd">
+
+    <!--
+               SpringMVC.xml 文件里必须要配置项：
+
+        1. 配置 Handler    (自动扫描控制器)
+        2. 配置处理器映射器  (<mvc:annotation-driven/>)
+        3. 配置处理器适配器  (<mvc:annotation-driven/>)
+        4. 配置视图解析器    (手动配置)
+
+        5. 处理 ajax 乱码
+        6. 静态资源的访问 (如果是使用的 restful 风格就需要)
+        7. 配置 拦截器    (一般是自定义拦截器)
+        8. 配置 文件上传参数
+    -->
+
+    <mvc:annotation-driven/> <!--  完成 处理器映射器 和 适配器的配置  -->
+    <mvc:default-servlet-handler/>
+
+
+    <!--  扫描 @Controller 注解修饰的类 这是一个 Spring 管理的 bean  -->
+    <context:component-scan base-package="com.lbyx.controller"/> <!--  配置 Handler  -->
+    <!--<context:component-scan base-package="com.json"/>-->
+
+
+    <!-- ==============  对静态资源文件的访问 restful 风格  ============== -->
+    <!--<mvc:resources mapping="/admin/**" location="/,/admin/"/>-->
+
+
+    <!-- ==============  自定义访问拦截器  ============== -->
+    <mvc:interceptors>
+        <mvc:interceptor>
+            <mvc:mapping path="/**"/>
+            <bean class="com.lbyx.interceptor.LoginInterceptor"/>
+        </mvc:interceptor>
+        <!--<mvc:interceptor>-->
+        <!--<mvc:mapping path="/**/**"/>-->
+        <!--<bean class="com.lbyx.interceptor.LoginHandlerInterceptor"/>-->
+        <!--</mvc:interceptor>-->
+    </mvc:interceptors>
+
+
+    <!--  处理 ajax 乱码: 需要 3.2以上版本 才可以  -->
+    <mvc:annotation-driven>
+        <mvc:message-converters register-defaults="true">
+            <bean class="org.springframework.http.converter.StringHttpMessageConverter">
+                <property name="supportedMediaTypes" value="text/html;charset=UTF-8"/>
+            </bean>
+        </mvc:message-converters>
+    </mvc:annotation-driven>
+
+
+    <!-- ==============  配置 SpringMVC 的视图解析器  ============== -->
+    <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+        <property name="prefix" value="/jsp/"/>
+        <property name="suffix" value=".jsp"/>
+    </bean>
+
+
+    <!-- 上传拦截，如最大上传值及最小上传值 -->
+    <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+        <property name="maxUploadSize" value="2147483648"/>
+        <property name="maxInMemorySize" value="4096"/>
+        <property name="defaultEncoding" value="utf-8"/>
+    </bean>
+
+
+</beans>

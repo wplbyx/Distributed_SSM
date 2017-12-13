@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+	    http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+	    http://www.springframework.org/schema/context
+	    http://www.springframework.org/schema/context/spring-context-3.0.xsd
+	    http://www.springframework.org/schema/aop
+	    http://www.springframework.org/schema/aop/spring-aop-3.0.xsd
+	    http://www.springframework.org/schema/tx
+	    http://www.springframework.org/schema/tx/spring-tx-3.0.xsd">
+
+
+
+    <!-- =============  数据源的配置，Spring 整合 Mybatis 后，数据源的配置交给 Spring  ============= -->
+    <!--  配置数据库相关参数 properties 的属性   -->
+    <context:property-placeholder location="classpath:jdbc.properties"/>
+
+    <!--  配置 c3p0 数据库连接池， 这里面的数据参数需要在 jdbc.properties 文件里配置 -->
+    <bean id="dataSource" class="com.alibaba.druid.pool.DruidDataSource" destroy-method="close">
+        <!-- 数据库基本信息配置 -->
+        <property name="url" value="${url}" />
+        <property name="username" value="${username}" />
+        <property name="password" value="${password}" />
+        <property name="driverClassName" value="${driverClassName}" />
+        <property name="filters" value="${filters}" />
+        <!-- 最大并发连接数 -->
+        <property name="maxActive" value="${maxActive}" />
+        <!--&lt;!&ndash; 初始化连接数量 &ndash;&gt;-->
+        <!--<property name="initialSize" value="${initialSize}" />-->
+        <!-- 配置获取连接等待超时的时间 -->
+        <property name="maxWait" value="${maxWait}" />
+        <!-- 最小空闲连接数 -->
+        <property name="minIdle" value="${minIdle}" />
+        <!--&lt;!&ndash; 配置间隔多久才进行一次检测，检测需要关闭的空闲连接，单位是毫秒 &ndash;&gt;-->
+        <!--<property name="timeBetweenEvictionRunsMillis" value="${timeBetweenEvictionRunsMillis}" />-->
+        <!--&lt;!&ndash; 配置一个连接在池中最小生存的时间，单位是毫秒 &ndash;&gt;-->
+        <!--<property name="minEvictableIdleTimeMillis" value="${minEvictableIdleTimeMillis}" />-->
+        <!--<property name="validationQuery" value="${validationQuery}" />-->
+        <!--<property name="testWhileIdle" value="${testWhileIdle}" />-->
+        <!--<property name="testOnBorrow" value="${testOnBorrow}" />-->
+        <!--<property name="testOnReturn" value="${testOnReturn}" />-->
+        <!--<property name="maxOpenPreparedStatements" value="${maxOpenPreparedStatements}" />-->
+        <!--&lt;!&ndash; 打开removeAbandoned功能 &ndash;&gt;-->
+        <!--<property name="removeAbandoned" value="${removeAbandoned}" />-->
+        <!--&lt;!&ndash; 1800秒，也就是30分钟 &ndash;&gt;-->
+        <!--<property name="removeAbandonedTimeout" value="${removeAbandonedTimeout}" />-->
+        <!--&lt;!&ndash; 关闭abanded连接时输出错误日志 &ndash;&gt;-->
+        <!--<property name="logAbandoned" value="${logAbandoned}" />-->
+    </bean>
+
+
+    <!--  配置 生成 SqlSessionFactory 对象 -->
+    <!--<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">-->
+        <!--<property name="dataSource" ref="DataSource"/>-->
+        <!--<property name="configLocation" value="classpath:mybatis/mybatis.xml"/>-->
+        <!--&lt;!&ndash;  扫描 dao 接口对应的动态代理对象 XXXMapper.xml 文件路径  &ndash;&gt;-->
+        <!--<property name="mapperLocations" value="com/lbyx/mapper/*.xml"/>-->
+    <!--</bean>-->
+    <!-- 配置sqlsessionFactory -->
+    <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+        <property name="dataSource" ref="dataSource" />
+        <property name="configLocation" value="classpath:mybatis/mybatis.xml" />
+        <property name="typeAliasesPackage" value="com.lbyx.pojo"/>
+        <property name="mapperLocations" value="classpath:com/lbyx/mapper/*.xml"/>
+    </bean>
+
+
+    <!--  配置扫描 dao 接口包，动态实现 dao 接口，注入到 spring 容器中 -->
+    <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+        <!--  注入 sqlSessionFactory  -->
+        <property name="sqlSessionFactoryBeanName" value="sqlSessionFactory"/>
+        <!--  给出需要扫描 dao 接口包路径 Spring会自动查找其下的接口  -->
+        <property name="basePackage" value="com.lbyx.dao"/>
+    </bean>
+
+
+    <!-- ================================  事务相关 配置  ================================ -->
+    <!--  配置基于注解的声明式事务，取代 xml 配置的方式  -->
+    <tx:annotation-driven transaction-manager="transactionManager"/>
+
+    <!--  配置事务管理器  -->
+    <bean id="transactionManager"
+          class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+        <!--  注入数据库连接池 事务是数据库 增删改 操作特有的， 所以需要指定一个数据源  -->
+        <property name="dataSource" ref="dataSource"/>
+    </bean>
+
+
+</beans>
