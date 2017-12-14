@@ -35,6 +35,10 @@
 
     <!-- ==============  对静态资源文件的访问 restful 风格  ============== -->
     <!--<mvc:resources mapping="/admin/**" location="/,/admin/"/>-->
+    <!-- 资源映射 -->
+    <mvc:resources location="/image/" mapping="/image/**"/>
+    <mvc:resources location="/back/" mapping="/back/**"/>
+    <mvc:resources location="/js/" mapping="/js/**"/>
 
 
     <!-- ==============  自定义访问拦截器  ============== -->
@@ -62,7 +66,7 @@
 
     <!-- ==============  配置 SpringMVC 的视图解析器  ============== -->
     <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
-        <property name="prefix" value="/jsp/"/>
+        <property name="prefix" value="/back/"/>
         <property name="suffix" value=".jsp"/>
     </bean>
 
