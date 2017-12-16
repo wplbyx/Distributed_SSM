@@ -59,8 +59,9 @@
     });
 </script>
 
-<div class="easyui-tabs" border="0" fit="true">
-  <div title="用户管理">
+<%-- 定义了一个 easyui-tabs 控件 --%>
+<div id="tabs" class="easyui-tabs" border="0" fit="true">
+  <div title="首页">
     <table id="table_datagrid" border="0">
 
     </table>

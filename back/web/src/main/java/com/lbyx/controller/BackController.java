@@ -1,6 +1,7 @@
 package com.lbyx.controller;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 /**
@@ -11,11 +12,44 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class BackController {
 
     /**
-     * 跳转到后台首页，返回一个逻辑视图
-     * @return
+     * 跳转到后台首页的 Handler
+     * @return "index" 一个逻辑视图
      */
-    @RequestMapping("/index")
+    @RequestMapping("/index_main")
     public String jumpToBackIndex(){
-        return "index";
+        return "index_main";
     }
+
+    /**
+     * 页面跳转的 Handler
+     * @param path： 传入页面的逻辑视图
+     * @return "path" 一个逻辑视图
+     */
+    @RequestMapping("/{path}")
+    public String showPage(@PathVariable String path){
+        return path;
+    }
+
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
