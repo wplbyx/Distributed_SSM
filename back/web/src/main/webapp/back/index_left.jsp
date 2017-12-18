@@ -72,13 +72,6 @@
 
     <ul id="menu" class="easyui-tree" style="margin-top: 10px;margin-left: 5px;">
       <li>
-        <span>员工管理</span>
-        <ul>
-          <li data-options="attributes:{'url':'staff_add'}">添加员工</li>
-          <li data-options="attributes:{'url':'staff_list'}">员工列表</li>
-        </ul>
-      </li>
-      <li>
         <span>用户管理</span>
         <ul>
           <li data-options="attributes:{'url':'staff_add'}">用户列表</li>
