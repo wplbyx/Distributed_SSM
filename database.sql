@@ -115,7 +115,6 @@ DROP TABLE IF EXISTS tb_goods;
 CREATE TABLE tb_goods (
     goods_id      INT(11) PRIMARY KEY AUTO_INCREMENT, -- 商品表 主键
     goods_type_id INT(11)      NOT NULL, -- (外) 商品的分类
-
     goodsName     VARCHAR(200) NOT NULL, -- 商品名称 (标题)
     goodsDesc     VARCHAR(500) NOT NULL, -- 商品描述 (卖点)
     goodsPrice    FLOAT(8, 2)  NOT NULL, -- 原价

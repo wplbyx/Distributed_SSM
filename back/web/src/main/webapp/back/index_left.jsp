@@ -99,6 +99,12 @@
           <li data-options="attributes:{'url':'order_sale'}">优惠券列表</li>
         </ul>
       </li>
+      <li>
+        <span>评论管理</span>
+        <ul>
+          <li data-options="attributes:{'url':'order_add'}">评论列表</li>
+        </ul>
+      </li>
     </ul>
 
   </div>
