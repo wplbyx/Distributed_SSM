@@ -1,7 +1,6 @@
 package com.lbyx.dao;
 
 import com.lbyx.BaseSpringJunit4Test;
-import com.lbyx.pojo.Admin;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 

@@ -1,0 +1,421 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lbyx.dao.GoodsDao">
+  <resultMap id="BaseResultMap" type="com.lbyx.pojo.Goods">
+    <id column="goods_id" jdbcType="INTEGER" property="goodsId" />
+    <result column="goods_type_id" jdbcType="INTEGER" property="goodsTypeId" />
+    <result column="goodsName" jdbcType="VARCHAR" property="goodsname" />
+    <result column="goodsDesc" jdbcType="VARCHAR" property="goodsdesc" />
+    <result column="goodsPrice" jdbcType="REAL" property="goodsprice" />
+    <result column="goodsNumber" jdbcType="INTEGER" property="goodsnumber" />
+    <result column="provider" jdbcType="VARCHAR" property="provider" />
+    <result column="onTime" jdbcType="TIMESTAMP" property="ontime" />
+    <result column="offTime" jdbcType="TIMESTAMP" property="offtime" />
+    <result column="status" jdbcType="TINYINT" property="status" />
+    <result column="givePoints" jdbcType="INTEGER" property="givepoints" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    goods_id, goods_type_id, goodsName, goodsDesc, goodsPrice, goodsNumber, provider, 
+    onTime, offTime, status, givePoints
+  </sql>
+  <select id="selectByExample" parameterType="com.lbyx.pojo.GoodsQuery" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from tb_goods
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from tb_goods
+    where goods_id = #{goodsId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from tb_goods
+    where goods_id = #{goodsId,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.lbyx.pojo.GoodsQuery">
+    delete from tb_goods
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.lbyx.pojo.Goods">
+    insert into tb_goods (goods_id, goods_type_id, goodsName, 
+      goodsDesc, goodsPrice, goodsNumber, 
+      provider, onTime, offTime, 
+      status, givePoints)
+    values (#{goodsId,jdbcType=INTEGER}, #{goodsTypeId,jdbcType=INTEGER}, #{goodsname,jdbcType=VARCHAR}, 
+      #{goodsdesc,jdbcType=VARCHAR}, #{goodsprice,jdbcType=REAL}, #{goodsnumber,jdbcType=INTEGER}, 
+      #{provider,jdbcType=VARCHAR}, #{ontime,jdbcType=TIMESTAMP}, #{offtime,jdbcType=TIMESTAMP}, 
+      #{status,jdbcType=TINYINT}, #{givepoints,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.lbyx.pojo.Goods">
+    insert into tb_goods
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="goodsId != null">
+        goods_id,
+      </if>
+      <if test="goodsTypeId != null">
+        goods_type_id,
+      </if>
+      <if test="goodsname != null">
+        goodsName,
+      </if>
+      <if test="goodsdesc != null">
+        goodsDesc,
+      </if>
+      <if test="goodsprice != null">
+        goodsPrice,
+      </if>
+      <if test="goodsnumber != null">
+        goodsNumber,
+      </if>
+      <if test="provider != null">
+        provider,
+      </if>
+      <if test="ontime != null">
+        onTime,
+      </if>
+      <if test="offtime != null">
+        offTime,
+      </if>
+      <if test="status != null">
+        status,
+      </if>
+      <if test="givepoints != null">
+        givePoints,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="goodsId != null">
+        #{goodsId,jdbcType=INTEGER},
+      </if>
+      <if test="goodsTypeId != null">
+        #{goodsTypeId,jdbcType=INTEGER},
+      </if>
+      <if test="goodsname != null">
+        #{goodsname,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsdesc != null">
+        #{goodsdesc,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsprice != null">
+        #{goodsprice,jdbcType=REAL},
+      </if>
+      <if test="goodsnumber != null">
+        #{goodsnumber,jdbcType=INTEGER},
+      </if>
+      <if test="provider != null">
+        #{provider,jdbcType=VARCHAR},
+      </if>
+      <if test="ontime != null">
+        #{ontime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="offtime != null">
+        #{offtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=TINYINT},
+      </if>
+      <if test="givepoints != null">
+        #{givepoints,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.lbyx.pojo.GoodsQuery" resultType="java.lang.Long">
+    select count(*) from tb_goods
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update tb_goods
+    <set>
+      <if test="record.goodsId != null">
+        goods_id = #{record.goodsId,jdbcType=INTEGER},
+      </if>
+      <if test="record.goodsTypeId != null">
+        goods_type_id = #{record.goodsTypeId,jdbcType=INTEGER},
+      </if>
+      <if test="record.goodsname != null">
+        goodsName = #{record.goodsname,jdbcType=VARCHAR},
+      </if>
+      <if test="record.goodsdesc != null">
+        goodsDesc = #{record.goodsdesc,jdbcType=VARCHAR},
+      </if>
+      <if test="record.goodsprice != null">
+        goodsPrice = #{record.goodsprice,jdbcType=REAL},
+      </if>
+      <if test="record.goodsnumber != null">
+        goodsNumber = #{record.goodsnumber,jdbcType=INTEGER},
+      </if>
+      <if test="record.provider != null">
+        provider = #{record.provider,jdbcType=VARCHAR},
+      </if>
+      <if test="record.ontime != null">
+        onTime = #{record.ontime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.offtime != null">
+        offTime = #{record.offtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.status != null">
+        status = #{record.status,jdbcType=TINYINT},
+      </if>
+      <if test="record.givepoints != null">
+        givePoints = #{record.givepoints,jdbcType=INTEGER},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update tb_goods
+    set goods_id = #{record.goodsId,jdbcType=INTEGER},
+      goods_type_id = #{record.goodsTypeId,jdbcType=INTEGER},
+      goodsName = #{record.goodsname,jdbcType=VARCHAR},
+      goodsDesc = #{record.goodsdesc,jdbcType=VARCHAR},
+      goodsPrice = #{record.goodsprice,jdbcType=REAL},
+      goodsNumber = #{record.goodsnumber,jdbcType=INTEGER},
+      provider = #{record.provider,jdbcType=VARCHAR},
+      onTime = #{record.ontime,jdbcType=TIMESTAMP},
+      offTime = #{record.offtime,jdbcType=TIMESTAMP},
+      status = #{record.status,jdbcType=TINYINT},
+      givePoints = #{record.givepoints,jdbcType=INTEGER}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.lbyx.pojo.Goods">
+    update tb_goods
+    <set>
+      <if test="goodsTypeId != null">
+        goods_type_id = #{goodsTypeId,jdbcType=INTEGER},
+      </if>
+      <if test="goodsname != null">
+        goodsName = #{goodsname,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsdesc != null">
+        goodsDesc = #{goodsdesc,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsprice != null">
+        goodsPrice = #{goodsprice,jdbcType=REAL},
+      </if>
+      <if test="goodsnumber != null">
+        goodsNumber = #{goodsnumber,jdbcType=INTEGER},
+      </if>
+      <if test="provider != null">
+        provider = #{provider,jdbcType=VARCHAR},
+      </if>
+      <if test="ontime != null">
+        onTime = #{ontime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="offtime != null">
+        offTime = #{offtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="status != null">
+        status = #{status,jdbcType=TINYINT},
+      </if>
+      <if test="givepoints != null">
+        givePoints = #{givepoints,jdbcType=INTEGER},
+      </if>
+    </set>
+    where goods_id = #{goodsId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.lbyx.pojo.Goods">
+    update tb_goods
+    set goods_type_id = #{goodsTypeId,jdbcType=INTEGER},
+      goodsName = #{goodsname,jdbcType=VARCHAR},
+      goodsDesc = #{goodsdesc,jdbcType=VARCHAR},
+      goodsPrice = #{goodsprice,jdbcType=REAL},
+      goodsNumber = #{goodsnumber,jdbcType=INTEGER},
+      provider = #{provider,jdbcType=VARCHAR},
+      onTime = #{ontime,jdbcType=TIMESTAMP},
+      offTime = #{offtime,jdbcType=TIMESTAMP},
+      status = #{status,jdbcType=TINYINT},
+      givePoints = #{givepoints,jdbcType=INTEGER}
+    where goods_id = #{goodsId,jdbcType=INTEGER}
+  </update>
+  <insert id="insertBatchSelective" parameterType="java.util.List">
+    insert into tb_goods
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="list[0].goodsId!=null">
+        goods_id,
+      </if>
+      <if test="list[0].goodsTypeId!=null">
+        goods_type_id,
+      </if>
+      <if test="list[0].goodsname!=null">
+        goodsName,
+      </if>
+      <if test="list[0].goodsdesc!=null">
+        goodsDesc,
+      </if>
+      <if test="list[0].goodsprice!=null">
+        goodsPrice,
+      </if>
+      <if test="list[0].goodsnumber!=null">
+        goodsNumber,
+      </if>
+      <if test="list[0].provider!=null">
+        provider,
+      </if>
+      <if test="list[0].ontime!=null">
+        onTime,
+      </if>
+      <if test="list[0].offtime!=null">
+        offTime,
+      </if>
+      <if test="list[0].status!=null">
+        status,
+      </if>
+      <if test="list[0].givepoints!=null">
+        givePoints,
+      </if>
+    </trim>
+     values 
+    <foreach collection="list" index="index" item="item" separator=",">
+      <trim prefix=" (" suffix=")" suffixOverrides=",">
+        <if test="item.goodsId!=null">
+          #{item.goodsId,jdbcType=INTEGER},
+        </if>
+        <if test="item.goodsTypeId!=null">
+          #{item.goodsTypeId,jdbcType=INTEGER},
+        </if>
+        <if test="item.goodsname!=null">
+          #{item.goodsname,jdbcType=VARCHAR},
+        </if>
+        <if test="item.goodsdesc!=null">
+          #{item.goodsdesc,jdbcType=VARCHAR},
+        </if>
+        <if test="item.goodsprice!=null">
+          #{item.goodsprice,jdbcType=REAL},
+        </if>
+        <if test="item.goodsnumber!=null">
+          #{item.goodsnumber,jdbcType=INTEGER},
+        </if>
+        <if test="item.provider!=null">
+          #{item.provider,jdbcType=VARCHAR},
+        </if>
+        <if test="item.ontime!=null">
+          #{item.ontime,jdbcType=TIMESTAMP},
+        </if>
+        <if test="item.offtime!=null">
+          #{item.offtime,jdbcType=TIMESTAMP},
+        </if>
+        <if test="item.status!=null">
+          #{item.status,jdbcType=TINYINT},
+        </if>
+        <if test="item.givepoints!=null">
+          #{item.givepoints,jdbcType=INTEGER},
+        </if>
+      </trim>
+    </foreach>
+  </insert>
+  <update id="updateBatchByPrimaryKeySelective" parameterType="java.util.List">
+    <foreach collection="list" index="index" item="item" separator=";">
+      update tb_goods
+      <set>
+        <if test="item.goodsTypeId!=null">
+          goods_type_id=#{item.goodsTypeId,jdbcType=INTEGER},
+        </if>
+        <if test="item.goodsname!=null">
+          goodsName=#{item.goodsname,jdbcType=VARCHAR},
+        </if>
+        <if test="item.goodsdesc!=null">
+          goodsDesc=#{item.goodsdesc,jdbcType=VARCHAR},
+        </if>
+        <if test="item.goodsprice!=null">
+          goodsPrice=#{item.goodsprice,jdbcType=REAL},
+        </if>
+        <if test="item.goodsnumber!=null">
+          goodsNumber=#{item.goodsnumber,jdbcType=INTEGER},
+        </if>
+        <if test="item.provider!=null">
+          provider=#{item.provider,jdbcType=VARCHAR},
+        </if>
+        <if test="item.ontime!=null">
+          onTime=#{item.ontime,jdbcType=TIMESTAMP},
+        </if>
+        <if test="item.offtime!=null">
+          offTime=#{item.offtime,jdbcType=TIMESTAMP},
+        </if>
+        <if test="item.status!=null">
+          status=#{item.status,jdbcType=TINYINT},
+        </if>
+        <if test="item.givepoints!=null">
+          givePoints=#{item.givepoints,jdbcType=INTEGER},
+        </if>
+      </set>
+      where 
+      goods_id = #{item.goodsId,jdbcType=INTEGER}
+    </foreach>
+  </update>
+</mapper>

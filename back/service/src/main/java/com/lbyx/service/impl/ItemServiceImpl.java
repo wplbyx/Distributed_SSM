@@ -1,7 +1,5 @@
 package com.lbyx.service.impl;
 
-import com.lbyx.dao.AdminDao;
-import com.lbyx.pojo.Admin;
 import com.lbyx.service.ItemService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

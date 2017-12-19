@@ -5,6 +5,8 @@ public class Admin {
 
     private String adminname;
 
+    private String adminnick;
+
     private String adminpwd;
 
     private String phone;
@@ -12,8 +14,6 @@ public class Admin {
     private String qq;
 
     private String email;
-
-    private Integer money;
 
     public Integer getAdminId() {
         return adminId;
@@ -29,6 +29,14 @@ public class Admin {
 
     public void setAdminname(String adminname) {
         this.adminname = adminname == null ? null : adminname.trim();
+    }
+
+    public String getAdminnick() {
+        return adminnick;
+    }
+
+    public void setAdminnick(String adminnick) {
+        this.adminnick = adminnick == null ? null : adminnick.trim();
     }
 
     public String getAdminpwd() {
@@ -61,13 +69,5 @@ public class Admin {
 
     public void setEmail(String email) {
         this.email = email == null ? null : email.trim();
-    }
-
-    public Integer getMoney() {
-        return money;
-    }
-
-    public void setMoney(Integer money) {
-        this.money = money;
     }
 }

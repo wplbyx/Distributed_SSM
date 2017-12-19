@@ -1,0 +1,373 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lbyx.dao.OrderDao">
+  <resultMap id="BaseResultMap" type="com.lbyx.pojo.Order">
+    <id column="order_id" jdbcType="INTEGER" property="orderId" />
+    <result column="admin_id" jdbcType="INTEGER" property="adminId" />
+    <result column="ownerId" jdbcType="INTEGER" property="ownerid" />
+    <result column="orderType" jdbcType="TINYINT" property="ordertype" />
+    <result column="orderValue" jdbcType="REAL" property="ordervalue" />
+    <result column="useCoupon" jdbcType="REAL" property="usecoupon" />
+    <result column="creatTiem" jdbcType="TIMESTAMP" property="creattiem" />
+    <result column="deliverTime" jdbcType="TIMESTAMP" property="delivertime" />
+    <result column="finishTime" jdbcType="TIMESTAMP" property="finishtime" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    order_id, admin_id, ownerId, orderType, orderValue, useCoupon, creatTiem, deliverTime, 
+    finishTime
+  </sql>
+  <select id="selectByExample" parameterType="com.lbyx.pojo.OrderQuery" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from tb_order
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from tb_order
+    where order_id = #{orderId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from tb_order
+    where order_id = #{orderId,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.lbyx.pojo.OrderQuery">
+    delete from tb_order
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.lbyx.pojo.Order">
+    insert into tb_order (order_id, admin_id, ownerId, 
+      orderType, orderValue, useCoupon, 
+      creatTiem, deliverTime, finishTime
+      )
+    values (#{orderId,jdbcType=INTEGER}, #{adminId,jdbcType=INTEGER}, #{ownerid,jdbcType=INTEGER}, 
+      #{ordertype,jdbcType=TINYINT}, #{ordervalue,jdbcType=REAL}, #{usecoupon,jdbcType=REAL}, 
+      #{creattiem,jdbcType=TIMESTAMP}, #{delivertime,jdbcType=TIMESTAMP}, #{finishtime,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.lbyx.pojo.Order">
+    insert into tb_order
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="orderId != null">
+        order_id,
+      </if>
+      <if test="adminId != null">
+        admin_id,
+      </if>
+      <if test="ownerid != null">
+        ownerId,
+      </if>
+      <if test="ordertype != null">
+        orderType,
+      </if>
+      <if test="ordervalue != null">
+        orderValue,
+      </if>
+      <if test="usecoupon != null">
+        useCoupon,
+      </if>
+      <if test="creattiem != null">
+        creatTiem,
+      </if>
+      <if test="delivertime != null">
+        deliverTime,
+      </if>
+      <if test="finishtime != null">
+        finishTime,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="orderId != null">
+        #{orderId,jdbcType=INTEGER},
+      </if>
+      <if test="adminId != null">
+        #{adminId,jdbcType=INTEGER},
+      </if>
+      <if test="ownerid != null">
+        #{ownerid,jdbcType=INTEGER},
+      </if>
+      <if test="ordertype != null">
+        #{ordertype,jdbcType=TINYINT},
+      </if>
+      <if test="ordervalue != null">
+        #{ordervalue,jdbcType=REAL},
+      </if>
+      <if test="usecoupon != null">
+        #{usecoupon,jdbcType=REAL},
+      </if>
+      <if test="creattiem != null">
+        #{creattiem,jdbcType=TIMESTAMP},
+      </if>
+      <if test="delivertime != null">
+        #{delivertime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="finishtime != null">
+        #{finishtime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.lbyx.pojo.OrderQuery" resultType="java.lang.Long">
+    select count(*) from tb_order
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update tb_order
+    <set>
+      <if test="record.orderId != null">
+        order_id = #{record.orderId,jdbcType=INTEGER},
+      </if>
+      <if test="record.adminId != null">
+        admin_id = #{record.adminId,jdbcType=INTEGER},
+      </if>
+      <if test="record.ownerid != null">
+        ownerId = #{record.ownerid,jdbcType=INTEGER},
+      </if>
+      <if test="record.ordertype != null">
+        orderType = #{record.ordertype,jdbcType=TINYINT},
+      </if>
+      <if test="record.ordervalue != null">
+        orderValue = #{record.ordervalue,jdbcType=REAL},
+      </if>
+      <if test="record.usecoupon != null">
+        useCoupon = #{record.usecoupon,jdbcType=REAL},
+      </if>
+      <if test="record.creattiem != null">
+        creatTiem = #{record.creattiem,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.delivertime != null">
+        deliverTime = #{record.delivertime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.finishtime != null">
+        finishTime = #{record.finishtime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update tb_order
+    set order_id = #{record.orderId,jdbcType=INTEGER},
+      admin_id = #{record.adminId,jdbcType=INTEGER},
+      ownerId = #{record.ownerid,jdbcType=INTEGER},
+      orderType = #{record.ordertype,jdbcType=TINYINT},
+      orderValue = #{record.ordervalue,jdbcType=REAL},
+      useCoupon = #{record.usecoupon,jdbcType=REAL},
+      creatTiem = #{record.creattiem,jdbcType=TIMESTAMP},
+      deliverTime = #{record.delivertime,jdbcType=TIMESTAMP},
+      finishTime = #{record.finishtime,jdbcType=TIMESTAMP}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.lbyx.pojo.Order">
+    update tb_order
+    <set>
+      <if test="adminId != null">
+        admin_id = #{adminId,jdbcType=INTEGER},
+      </if>
+      <if test="ownerid != null">
+        ownerId = #{ownerid,jdbcType=INTEGER},
+      </if>
+      <if test="ordertype != null">
+        orderType = #{ordertype,jdbcType=TINYINT},
+      </if>
+      <if test="ordervalue != null">
+        orderValue = #{ordervalue,jdbcType=REAL},
+      </if>
+      <if test="usecoupon != null">
+        useCoupon = #{usecoupon,jdbcType=REAL},
+      </if>
+      <if test="creattiem != null">
+        creatTiem = #{creattiem,jdbcType=TIMESTAMP},
+      </if>
+      <if test="delivertime != null">
+        deliverTime = #{delivertime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="finishtime != null">
+        finishTime = #{finishtime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where order_id = #{orderId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.lbyx.pojo.Order">
+    update tb_order
+    set admin_id = #{adminId,jdbcType=INTEGER},
+      ownerId = #{ownerid,jdbcType=INTEGER},
+      orderType = #{ordertype,jdbcType=TINYINT},
+      orderValue = #{ordervalue,jdbcType=REAL},
+      useCoupon = #{usecoupon,jdbcType=REAL},
+      creatTiem = #{creattiem,jdbcType=TIMESTAMP},
+      deliverTime = #{delivertime,jdbcType=TIMESTAMP},
+      finishTime = #{finishtime,jdbcType=TIMESTAMP}
+    where order_id = #{orderId,jdbcType=INTEGER}
+  </update>
+  <insert id="insertBatchSelective" parameterType="java.util.List">
+    insert into tb_order
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="list[0].orderId!=null">
+        order_id,
+      </if>
+      <if test="list[0].adminId!=null">
+        admin_id,
+      </if>
+      <if test="list[0].ownerid!=null">
+        ownerId,
+      </if>
+      <if test="list[0].ordertype!=null">
+        orderType,
+      </if>
+      <if test="list[0].ordervalue!=null">
+        orderValue,
+      </if>
+      <if test="list[0].usecoupon!=null">
+        useCoupon,
+      </if>
+      <if test="list[0].creattiem!=null">
+        creatTiem,
+      </if>
+      <if test="list[0].delivertime!=null">
+        deliverTime,
+      </if>
+      <if test="list[0].finishtime!=null">
+        finishTime,
+      </if>
+    </trim>
+     values 
+    <foreach collection="list" index="index" item="item" separator=",">
+      <trim prefix=" (" suffix=")" suffixOverrides=",">
+        <if test="item.orderId!=null">
+          #{item.orderId,jdbcType=INTEGER},
+        </if>
+        <if test="item.adminId!=null">
+          #{item.adminId,jdbcType=INTEGER},
+        </if>
+        <if test="item.ownerid!=null">
+          #{item.ownerid,jdbcType=INTEGER},
+        </if>
+        <if test="item.ordertype!=null">
+          #{item.ordertype,jdbcType=TINYINT},
+        </if>
+        <if test="item.ordervalue!=null">
+          #{item.ordervalue,jdbcType=REAL},
+        </if>
+        <if test="item.usecoupon!=null">
+          #{item.usecoupon,jdbcType=REAL},
+        </if>
+        <if test="item.creattiem!=null">
+          #{item.creattiem,jdbcType=TIMESTAMP},
+        </if>
+        <if test="item.delivertime!=null">
+          #{item.delivertime,jdbcType=TIMESTAMP},
+        </if>
+        <if test="item.finishtime!=null">
+          #{item.finishtime,jdbcType=TIMESTAMP},
+        </if>
+      </trim>
+    </foreach>
+  </insert>
+  <update id="updateBatchByPrimaryKeySelective" parameterType="java.util.List">
+    <foreach collection="list" index="index" item="item" separator=";">
+      update tb_order
+      <set>
+        <if test="item.adminId!=null">
+          admin_id=#{item.adminId,jdbcType=INTEGER},
+        </if>
+        <if test="item.ownerid!=null">
+          ownerId=#{item.ownerid,jdbcType=INTEGER},
+        </if>
+        <if test="item.ordertype!=null">
+          orderType=#{item.ordertype,jdbcType=TINYINT},
+        </if>
+        <if test="item.ordervalue!=null">
+          orderValue=#{item.ordervalue,jdbcType=REAL},
+        </if>
+        <if test="item.usecoupon!=null">
+          useCoupon=#{item.usecoupon,jdbcType=REAL},
+        </if>
+        <if test="item.creattiem!=null">
+          creatTiem=#{item.creattiem,jdbcType=TIMESTAMP},
+        </if>
+        <if test="item.delivertime!=null">
+          deliverTime=#{item.delivertime,jdbcType=TIMESTAMP},
+        </if>
+        <if test="item.finishtime!=null">
+          finishTime=#{item.finishtime,jdbcType=TIMESTAMP},
+        </if>
+      </set>
+      where 
+      order_id = #{item.orderId,jdbcType=INTEGER}
+    </foreach>
+  </update>
+</mapper>

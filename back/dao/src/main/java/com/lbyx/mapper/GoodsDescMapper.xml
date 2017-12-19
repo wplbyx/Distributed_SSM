@@ -1,0 +1,286 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lbyx.dao.GoodsDescDao">
+  <resultMap id="BaseResultMap" type="com.lbyx.pojo.GoodsDesc">
+    <id column="goods_desc_id" jdbcType="INTEGER" property="goodsDescId" />
+    <result column="goods_id" jdbcType="INTEGER" property="goodsId" />
+    <result column="uploadTime" jdbcType="TIMESTAMP" property="uploadtime" />
+  </resultMap>
+  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.lbyx.pojo.GoodsDesc">
+    <result column="goodsDesc" jdbcType="LONGVARCHAR" property="goodsdesc" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    goods_desc_id, goods_id, uploadTime
+  </sql>
+  <sql id="Blob_Column_List">
+    goodsDesc
+  </sql>
+  <select id="selectByExampleWithBLOBs" parameterType="com.lbyx.pojo.GoodsDescQuery" resultMap="ResultMapWithBLOBs">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from tb_goods_desc
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByExample" parameterType="com.lbyx.pojo.GoodsDescQuery" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from tb_goods_desc
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="ResultMapWithBLOBs">
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from tb_goods_desc
+    where goods_desc_id = #{goodsDescId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from tb_goods_desc
+    where goods_desc_id = #{goodsDescId,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.lbyx.pojo.GoodsDescQuery">
+    delete from tb_goods_desc
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.lbyx.pojo.GoodsDesc">
+    insert into tb_goods_desc (goods_desc_id, goods_id, uploadTime, 
+      goodsDesc)
+    values (#{goodsDescId,jdbcType=INTEGER}, #{goodsId,jdbcType=INTEGER}, #{uploadtime,jdbcType=TIMESTAMP}, 
+      #{goodsdesc,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.lbyx.pojo.GoodsDesc">
+    insert into tb_goods_desc
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="goodsDescId != null">
+        goods_desc_id,
+      </if>
+      <if test="goodsId != null">
+        goods_id,
+      </if>
+      <if test="uploadtime != null">
+        uploadTime,
+      </if>
+      <if test="goodsdesc != null">
+        goodsDesc,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="goodsDescId != null">
+        #{goodsDescId,jdbcType=INTEGER},
+      </if>
+      <if test="goodsId != null">
+        #{goodsId,jdbcType=INTEGER},
+      </if>
+      <if test="uploadtime != null">
+        #{uploadtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="goodsdesc != null">
+        #{goodsdesc,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.lbyx.pojo.GoodsDescQuery" resultType="java.lang.Long">
+    select count(*) from tb_goods_desc
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update tb_goods_desc
+    <set>
+      <if test="record.goodsDescId != null">
+        goods_desc_id = #{record.goodsDescId,jdbcType=INTEGER},
+      </if>
+      <if test="record.goodsId != null">
+        goods_id = #{record.goodsId,jdbcType=INTEGER},
+      </if>
+      <if test="record.uploadtime != null">
+        uploadTime = #{record.uploadtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.goodsdesc != null">
+        goodsDesc = #{record.goodsdesc,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExampleWithBLOBs" parameterType="map">
+    update tb_goods_desc
+    set goods_desc_id = #{record.goodsDescId,jdbcType=INTEGER},
+      goods_id = #{record.goodsId,jdbcType=INTEGER},
+      uploadTime = #{record.uploadtime,jdbcType=TIMESTAMP},
+      goodsDesc = #{record.goodsdesc,jdbcType=LONGVARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update tb_goods_desc
+    set goods_desc_id = #{record.goodsDescId,jdbcType=INTEGER},
+      goods_id = #{record.goodsId,jdbcType=INTEGER},
+      uploadTime = #{record.uploadtime,jdbcType=TIMESTAMP}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.lbyx.pojo.GoodsDesc">
+    update tb_goods_desc
+    <set>
+      <if test="goodsId != null">
+        goods_id = #{goodsId,jdbcType=INTEGER},
+      </if>
+      <if test="uploadtime != null">
+        uploadTime = #{uploadtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="goodsdesc != null">
+        goodsDesc = #{goodsdesc,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where goods_desc_id = #{goodsDescId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.lbyx.pojo.GoodsDesc">
+    update tb_goods_desc
+    set goods_id = #{goodsId,jdbcType=INTEGER},
+      uploadTime = #{uploadtime,jdbcType=TIMESTAMP},
+      goodsDesc = #{goodsdesc,jdbcType=LONGVARCHAR}
+    where goods_desc_id = #{goodsDescId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.lbyx.pojo.GoodsDesc">
+    update tb_goods_desc
+    set goods_id = #{goodsId,jdbcType=INTEGER},
+      uploadTime = #{uploadtime,jdbcType=TIMESTAMP}
+    where goods_desc_id = #{goodsDescId,jdbcType=INTEGER}
+  </update>
+  <insert id="insertBatchSelective" parameterType="java.util.List">
+    insert into tb_goods_desc
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="list[0].goodsDescId!=null">
+        goods_desc_id,
+      </if>
+      <if test="list[0].goodsId!=null">
+        goods_id,
+      </if>
+      <if test="list[0].uploadtime!=null">
+        uploadTime,
+      </if>
+      <if test="list[0].goodsdesc!=null">
+        goodsDesc,
+      </if>
+    </trim>
+     values 
+    <foreach collection="list" index="index" item="item" separator=",">
+      <trim prefix=" (" suffix=")" suffixOverrides=",">
+        <if test="item.goodsDescId!=null">
+          #{item.goodsDescId,jdbcType=INTEGER},
+        </if>
+        <if test="item.goodsId!=null">
+          #{item.goodsId,jdbcType=INTEGER},
+        </if>
+        <if test="item.uploadtime!=null">
+          #{item.uploadtime,jdbcType=TIMESTAMP},
+        </if>
+        <if test="item.goodsdesc!=null">
+          #{item.goodsdesc,jdbcType=LONGVARCHAR},
+        </if>
+      </trim>
+    </foreach>
+  </insert>
+  <update id="updateBatchByPrimaryKeySelective" parameterType="java.util.List">
+    <foreach collection="list" index="index" item="item" separator=";">
+      update tb_goods_desc
+      <set>
+        <if test="item.goodsId!=null">
+          goods_id=#{item.goodsId,jdbcType=INTEGER},
+        </if>
+        <if test="item.uploadtime!=null">
+          uploadTime=#{item.uploadtime,jdbcType=TIMESTAMP},
+        </if>
+        <if test="item.goodsdesc!=null">
+          goodsDesc=#{item.goodsdesc,jdbcType=LONGVARCHAR},
+        </if>
+      </set>
+      where 
+      goods_desc_id = #{item.goodsDescId,jdbcType=INTEGER}
+    </foreach>
+  </update>
+</mapper>

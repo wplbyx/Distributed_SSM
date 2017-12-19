@@ -1,0 +1,272 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lbyx.dao.CarItemDao">
+  <resultMap id="BaseResultMap" type="com.lbyx.pojo.CarItem">
+    <id column="car_item_id" jdbcType="INTEGER" property="carItemId" />
+    <result column="car_id" jdbcType="INTEGER" property="carId" />
+    <result column="goods_id" jdbcType="INTEGER" property="goodsId" />
+    <result column="goodsNumber" jdbcType="INTEGER" property="goodsnumber" />
+    <result column="addTime" jdbcType="TIMESTAMP" property="addtime" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    car_item_id, car_id, goods_id, goodsNumber, addTime
+  </sql>
+  <select id="selectByExample" parameterType="com.lbyx.pojo.CarItemQuery" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from tb_car_item
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from tb_car_item
+    where car_item_id = #{carItemId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from tb_car_item
+    where car_item_id = #{carItemId,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.lbyx.pojo.CarItemQuery">
+    delete from tb_car_item
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.lbyx.pojo.CarItem">
+    insert into tb_car_item (car_item_id, car_id, goods_id, 
+      goodsNumber, addTime)
+    values (#{carItemId,jdbcType=INTEGER}, #{carId,jdbcType=INTEGER}, #{goodsId,jdbcType=INTEGER}, 
+      #{goodsnumber,jdbcType=INTEGER}, #{addtime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.lbyx.pojo.CarItem">
+    insert into tb_car_item
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="carItemId != null">
+        car_item_id,
+      </if>
+      <if test="carId != null">
+        car_id,
+      </if>
+      <if test="goodsId != null">
+        goods_id,
+      </if>
+      <if test="goodsnumber != null">
+        goodsNumber,
+      </if>
+      <if test="addtime != null">
+        addTime,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="carItemId != null">
+        #{carItemId,jdbcType=INTEGER},
+      </if>
+      <if test="carId != null">
+        #{carId,jdbcType=INTEGER},
+      </if>
+      <if test="goodsId != null">
+        #{goodsId,jdbcType=INTEGER},
+      </if>
+      <if test="goodsnumber != null">
+        #{goodsnumber,jdbcType=INTEGER},
+      </if>
+      <if test="addtime != null">
+        #{addtime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.lbyx.pojo.CarItemQuery" resultType="java.lang.Long">
+    select count(*) from tb_car_item
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update tb_car_item
+    <set>
+      <if test="record.carItemId != null">
+        car_item_id = #{record.carItemId,jdbcType=INTEGER},
+      </if>
+      <if test="record.carId != null">
+        car_id = #{record.carId,jdbcType=INTEGER},
+      </if>
+      <if test="record.goodsId != null">
+        goods_id = #{record.goodsId,jdbcType=INTEGER},
+      </if>
+      <if test="record.goodsnumber != null">
+        goodsNumber = #{record.goodsnumber,jdbcType=INTEGER},
+      </if>
+      <if test="record.addtime != null">
+        addTime = #{record.addtime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update tb_car_item
+    set car_item_id = #{record.carItemId,jdbcType=INTEGER},
+      car_id = #{record.carId,jdbcType=INTEGER},
+      goods_id = #{record.goodsId,jdbcType=INTEGER},
+      goodsNumber = #{record.goodsnumber,jdbcType=INTEGER},
+      addTime = #{record.addtime,jdbcType=TIMESTAMP}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.lbyx.pojo.CarItem">
+    update tb_car_item
+    <set>
+      <if test="carId != null">
+        car_id = #{carId,jdbcType=INTEGER},
+      </if>
+      <if test="goodsId != null">
+        goods_id = #{goodsId,jdbcType=INTEGER},
+      </if>
+      <if test="goodsnumber != null">
+        goodsNumber = #{goodsnumber,jdbcType=INTEGER},
+      </if>
+      <if test="addtime != null">
+        addTime = #{addtime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where car_item_id = #{carItemId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.lbyx.pojo.CarItem">
+    update tb_car_item
+    set car_id = #{carId,jdbcType=INTEGER},
+      goods_id = #{goodsId,jdbcType=INTEGER},
+      goodsNumber = #{goodsnumber,jdbcType=INTEGER},
+      addTime = #{addtime,jdbcType=TIMESTAMP}
+    where car_item_id = #{carItemId,jdbcType=INTEGER}
+  </update>
+  <insert id="insertBatchSelective" parameterType="java.util.List">
+    insert into tb_car_item
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="list[0].carItemId!=null">
+        car_item_id,
+      </if>
+      <if test="list[0].carId!=null">
+        car_id,
+      </if>
+      <if test="list[0].goodsId!=null">
+        goods_id,
+      </if>
+      <if test="list[0].goodsnumber!=null">
+        goodsNumber,
+      </if>
+      <if test="list[0].addtime!=null">
+        addTime,
+      </if>
+    </trim>
+     values 
+    <foreach collection="list" index="index" item="item" separator=",">
+      <trim prefix=" (" suffix=")" suffixOverrides=",">
+        <if test="item.carItemId!=null">
+          #{item.carItemId,jdbcType=INTEGER},
+        </if>
+        <if test="item.carId!=null">
+          #{item.carId,jdbcType=INTEGER},
+        </if>
+        <if test="item.goodsId!=null">
+          #{item.goodsId,jdbcType=INTEGER},
+        </if>
+        <if test="item.goodsnumber!=null">
+          #{item.goodsnumber,jdbcType=INTEGER},
+        </if>
+        <if test="item.addtime!=null">
+          #{item.addtime,jdbcType=TIMESTAMP},
+        </if>
+      </trim>
+    </foreach>
+  </insert>
+  <update id="updateBatchByPrimaryKeySelective" parameterType="java.util.List">
+    <foreach collection="list" index="index" item="item" separator=";">
+      update tb_car_item
+      <set>
+        <if test="item.carId!=null">
+          car_id=#{item.carId,jdbcType=INTEGER},
+        </if>
+        <if test="item.goodsId!=null">
+          goods_id=#{item.goodsId,jdbcType=INTEGER},
+        </if>
+        <if test="item.goodsnumber!=null">
+          goodsNumber=#{item.goodsnumber,jdbcType=INTEGER},
+        </if>
+        <if test="item.addtime!=null">
+          addTime=#{item.addtime,jdbcType=TIMESTAMP},
+        </if>
+      </set>
+      where 
+      car_item_id = #{item.carItemId,jdbcType=INTEGER}
+    </foreach>
+  </update>
+</mapper>

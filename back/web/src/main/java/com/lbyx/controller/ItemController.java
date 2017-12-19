@@ -1,6 +1,5 @@
 package com.lbyx.controller;
 
-import com.lbyx.pojo.Admin;
 import com.lbyx.service.ItemService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;

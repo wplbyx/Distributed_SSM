@@ -1,12 +1,11 @@
 package com.lbyx.dao;
 
-import com.lbyx.pojo.*;
+import com.lbyx.pojo.Admin;
+import com.lbyx.pojo.AdminQuery;
 import org.apache.ibatis.annotations.Param;
-import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
-@Repository
 public interface AdminDao {
     long countByExample(AdminQuery example);
 
