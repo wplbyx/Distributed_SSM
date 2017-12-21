@@ -99,6 +99,7 @@ DROP TABLE IF EXISTS tb_goods_type;
 CREATE TABLE tb_goods_type (
     goods_type_id   INT(11) PRIMARY KEY AUTO_INCREMENT, -- 商品类别的主键
     father_type_id  int(11) not null DEFAULT 0,         -- 父分类的 id； 0:表示一级类目
+    isLeaf          BOOLEAN NOT NULL DEFAULT FALSE ,    -- 是否是用叶子类目，默认是父类目
     typeName        VARCHAR(128) NOT NULL, -- 商品描述 关键字
     sortOrder       INT(11)             DEFAULT 1       -- 排序标准
 
@@ -115,10 +116,11 @@ DROP TABLE IF EXISTS tb_goods;
 CREATE TABLE tb_goods (
     goods_id      INT(11) PRIMARY KEY AUTO_INCREMENT, -- 商品表 主键
     goods_type_id INT(11)      NOT NULL, -- (外) 商品的分类
+
     goodsName     VARCHAR(200) NOT NULL, -- 商品名称 (标题)
     goodsDesc     VARCHAR(500) NOT NULL, -- 商品描述 (卖点)
     goodsPrice    FLOAT(8, 2)  NOT NULL, -- 原价
-    goodsNumber   INT(11)             DEFAULT 100,   -- 商品库存
+    goodsNumber   INT(11)             DEFAULT 1000,  -- 商品库存
     provider      VARCHAR(200) not null, -- 商品供货商
     onTime        DATETIME            DEFAULT now(), -- 上架时间
     offTime       DATETIME            DEFAULT NULL,  -- 下架时间
@@ -497,26 +499,107 @@ INSERT INTO tb_goods_type (goods_type_id, father_type_id, typeName, sortOrder) V
 
 
 --  tb_goods_type      商品分类表  (三级类目)
-INSERT INTO tb_goods_type (father_type_id, typeName, sortOrder) VALUES
-    (17, '4K电视', 1),
-    (17, 'OLED电视', 1),
-    (17, '超级大电视', 1),
-    (17, '曲面电视', 1),
+INSERT INTO tb_goods_type (goods_type_id, father_type_id, isLeaf, typeName, sortOrder) VALUES
+    (160, 17, true, '4K电视', 1),
+    (161, 17, true, 'OLED电视', 1),
+    (162, 17, true, '超级大电视', 1),
+    (163, 17, true, '曲面电视', 1),
 
-    (18, '中央空调', 1),
-    (18, '挂式空调', 1),
-    (18, '空调配件', 1),
+    (164, 18, true, '中央空调', 1),
+    (165, 18, true, '挂式空调', 1),
+    (166, 18, true, '空调配件', 1),
 
-    (24, '华为手机', 1),
-    (24, '三星手机', 1),
-    (24, '苹果手机', 1),
-    (25, '手机屏幕配件', 1),
-    (26, '单反相机', 1),
+    (167, 24, true, '华为手机', 1),
+    (168, 24, true, '三星手机', 1),
+    (169, 24, true, '苹果手机', 1),
+    (170, 25, true, '手机屏幕配件', 1),
+    (171, 26, true, '单反相机', 1),
+
+    (172, 31, true, '笔记本', 1),
+    (173, 31, true, '平板电脑', 1),
+    (174, 31, true, '台式机一体机', 1),
+
+    (175, 32, true, '显示器', 1),
+    (176, 32, true, '机箱电源', 1),
+
+    (177, 33, true, '鼠标', 1),
+    (178, 33, true, '键盘', 1);
 
 
 
-    (151, '基金理财', 1),
-    (151, '定期理财', 1);
+INSERT INTO tb_goods (goods_type_id, goodsName, goodsDesc, goodsPrice, provider) VALUES
+    (160,
+     '创维55英寸14核4K超高清智能液晶电视',
+     '创维（Skyworth） 55M7 55英寸14核4K超高清智能酷开网络液晶电视（黑色）', 3898.98, '京东自营'),
+    (161,
+     '索尼（SONY）KD-55A1 55英寸 OLED 4K HDR 安卓6.0智能电视（黑色）',
+     '索尼（SONY）KD-55A1 55英寸 OLED 4K HDR 安卓6.0智能电视（黑色）', 22999.00, '京东自营'),
+    (162,
+     '小米（MI） 65英寸 全景声影院 4K超高清智能平板电视机（灰色）',
+     '小米（MI）小米电视4 L65M5-AB 65英寸 3GB+32GB 4.9mm超薄 全景声影院 4K超高清智能平板电视机（灰色 ）',
+     8999.00, '京东自营'),
+    (163,
+     'HDR曲面超薄4K电视金属机身（枪色）',
+     'TCL 55A950C 55英寸32核人工智能 HDR曲面超薄4K电视金属机身（枪色）', 4199.00, '京东自营'),
 
 
+    (164,
+     '奥克斯（AUX）5匹吸顶式天花机',
+     '奥克斯（AUX）5匹吸顶式天花机 冷暖 6年保修 家用中央空调 适用45-68㎡QRD-120N/EBS-N3（连锁）',
+     6999.00, '京东自营'),
+    (165,
+     '美的智能壁挂式空调',
+     '美的（Midea）正1.5匹 变频 智弧 冷暖 智能壁挂式空调 KFR-35GW/WDAA3@', 2799.00, '京东自营'),
+    (166,
+     '空调遥控器',
+     '嘉沛 K-202 空调遥控器 适用于美的品牌空调 白色', 35.00, '京东自营'),
+
+
+    (167,
+     '华为荣耀9',
+     '荣耀9 全网通 标配版 4GB+64GB 海鸥灰 移动联通电信4G手机 双卡双待', 2299.00, '京东自营'),
+    (168,
+     '三星（SAMSUNG） S8',
+     '三星（SAMSUNG） S8+（SM-G9550）全网通4G 全视全面屏手机 谜夜黑 4G+64G 高配版', 6188.00, '京东自营'),
+    (169,
+     'iPhone X',
+     'Apple iPhone X (A1865) 64GB 深空灰色 移动联通电信4G手机', 8388.00, '京东自营'),
+    (170,
+     '手机贴膜 保护膜 钢化膜',
+     'YOMO 荣耀V9钢化膜 手机贴膜 保护膜 v9钢化膜 全屏覆盖防爆玻璃贴膜 全覆盖蓝色', 15.80, '京东自营'),
+    (171,
+     '佳能（Canon）EOS 80D 单反套机',
+     '佳能（Canon）EOS 80D 单反套机（EF-S 18-200mm f/3.5-5.6 IS） 2420万有效像素 45点十字对焦 WIFI/NFC',
+     8999.00, '京东自营'),
+
+
+    (172,
+     '华硕(ASUS) 飞行堡垒',
+     '华硕(ASUS) 飞行堡垒三代FX60VM GTX1060 15.6英寸游戏笔记本电脑(i7-6700HQ 8G 128GSSD+1T FHD)黑色',
+     6299.00, '京东自营'),
+    (173,
+     'Apple iPad 平板电脑',
+     'Apple iPad 平板电脑 9.7英寸（128G WLAN版/A9 芯片/Retina显示屏/Touch ID技术 MPGW2CH/A）金色',
+     3288.00, '京东自营'),
+    (174,
+     '联想（Lenovo）AIO 520 致美一体机',
+     '联想（Lenovo）AIO 520 致美一体机21.5英寸（E2-9010 4G 1T 集显 WIFI 蓝牙 三年上门 ）黑', 2999.00, '京东自营'),
+
+
+    (175,
+     '华硕（ASUS）VG278Q 27英寸 国民电竞显示器',
+     '华硕（ASUS）VG278Q 27英寸144Hz刷新1ms响应 MOBA模式 吃鸡 国民电竞显示器（HDMI/DP/DVI接口+内置音箱）',
+     2499.00, '京东自营'),
+    (176,
+     '毁灭者经典U3升级版 中塔电脑主机机箱',
+     '酷冷至尊(CoolerMaster)毁灭者经典U3升级版 中塔电脑主机机箱(支持ATX主板/USB3.0/电源下置/LED风扇) 黑色',
+     299.00, '京东自营'),
+
+
+    (177,
+     '炫光自适应游戏鼠标',
+     '罗技（Logitech）G502 炫光自适应游戏鼠标 RGB鼠标', 399.00, '京东自营'),
+    (178,
+     '机械键盘 红轴',
+     '美商海盗船 (USCorsair) K63 机械游戏键盘 红色背光 黑色 红轴 绝地求生吃鸡键盘', 599.00, '京东自营');
 
