@@ -31,32 +31,39 @@
       <tr>
         <td>商品类目:</td>
         <td>
-          <a href="javascript:void(0)" class="easyui-linkbutton selectItemCat">选择类目</a>
-          <input type="hidden" name="cid" style="width: 280px;"></input>
+          <a href="javascript:void(0)" class="easyui-linkbutton"
+             onclick="$('#dlg').dialog('open')">选择类目</a>
+          <input type="hidden" id="goodsType" name="goodsTypeId" style="width: 280px;" />
+          <span id="type_span"></span>
         </td>
       </tr>
       <tr>
-        <td>商品标题:</td>
-        <td><input class="easyui-textbox" type="text" name="title" data-options="required:true" style="width: 280px;"></input></td>
+        <td>商品名称:</td>
+        <td><input class="easyui-textbox" type="text" name="goodsname" data-options="required:true" style="width: 280px;"></input></td>
       </tr>
       <tr>
-        <td>商品卖点:</td>
-        <td><input class="easyui-textbox" name="sellPoint" data-options="multiline:true,validType:'length[0,150]'" style="height:60px;width: 280px;"></input></td>
+        <td>商品描述:</td>
+        <td><input class="easyui-textbox" name="goodsdesc" data-options="multiline:true,validType:'length[0,150]'" style="height:60px;width: 280px;"></input></td>
       </tr>
       <tr>
         <td>商品价格:</td>
-        <td><input class="easyui-numberbox" type="text" name="priceView" data-options="min:1,max:99999999,precision:2,required:true" />
-          <input type="hidden" name="price"/>
+        <td>
+          <input class="easyui-numberbox" type="text" name="priceView"
+                 data-options="min:1,max:99999999,precision:2,required:true" />
+          <input type="hidden" name="goodsprice"/>
         </td>
       </tr>
       <tr>
         <td>库存数量:</td>
-        <td><input class="easyui-numberbox" type="text" name="num" data-options="min:1,max:99999999,precision:0,required:true" /></td>
+        <td><input class="easyui-numberbox" type="text" name="goodsnumber"
+                   data-options="min:1,max:99999999,precision:0,required:true" />
+        </td>
       </tr>
       <tr>
-        <td>条形码:</td>
+        <td>供货商:</td>
         <td>
-          <input class="easyui-textbox" type="text" name="barcode" data-options="validType:'length[1,30]'" />
+          <input class="easyui-textbox" type="text" name="provider"
+                 data-options="validType:'length[1,30]'" />
         </td>
       </tr>
       <tr>
@@ -73,10 +80,10 @@
           <textarea style="width:800px;height:300px;visibility:hidden;" name="desc"></textarea>
         </td>
       </tr>
-      <tr class="params hide">
-        <td>商品规格:</td>
+      <tr>
+        <td>商品价值积分:</td>
         <td>
-
+          <input class="easyui-textbox" type="text" name="givepoints"/>
         </td>
       </tr>
     </table>
@@ -86,6 +93,13 @@
     <a href="javascript:void(0)" class="easyui-linkbutton" onclick="submitForm()">提交</a>
     <a href="javascript:void(0)" class="easyui-linkbutton" onclick="clearForm()">重置</a>
   </div>
+
+  <div id="dlg" class="easyui-dialog" title="商品类目选择"
+       style="width:400px;height:360px;"
+       data-options="closed:true" >
+    <ul id="async-tree" class="easyui-tree" url="/goods/type" lines="true" ></ul>
+  </div>
+
 </div>
 
 
@@ -102,6 +116,32 @@
             TAOTAO.changeItemParam(node, "itemAddForm");
         }});
     });
+
+    $("#dlg").dialog({
+        modal:true,
+        iconCls:'icon-save',
+        // 当对话框打开的时候 初始化数据：
+        onOpen:function(){
+            var _dlg = this;
+            $("#async-tree").tree({
+                onClick:function (node) {
+                    if ($(this).tree("isLeaf", node.target)){
+                        //
+//                        _ele.parent().find("[name=cid]").val(node.id);
+//                        _ele.next().text(node.text).attr("cid",node.id);
+//
+                        $("#goodsType").text(node.text).attr("goodsTypeId", node.id);
+                        $("#type_span").html(node.text);
+
+                        $("#dlg").dialog('close');
+                    }
+                }
+            });
+        }
+    });
+
+
+
 
     //提交表单
     function submitForm(){

@@ -3,9 +3,11 @@ package com.lbyx.dao;
 import com.lbyx.pojo.User;
 import com.lbyx.pojo.UserQuery;
 import org.apache.ibatis.annotations.Param;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
+@Repository
 public interface UserDao {
     long countByExample(UserQuery example);
 

@@ -3,4 +3,12 @@
         "http://mybatis.org/dtd/mybatis-3-config.dtd">
 <configuration>
 
+    <!-- 添加 Mybatis 的插件 -->
+    <plugins>
+        <!-- 添加分页插件 -->
+        <plugin interceptor="com.github.pagehelper.PageHelper">
+            <property name="dialect" value="mysql"/>
+        </plugin>
+    </plugins>
+    
 </configuration>

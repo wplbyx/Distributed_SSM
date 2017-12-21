@@ -4,6 +4,7 @@
   <resultMap id="BaseResultMap" type="com.lbyx.pojo.GoodsType">
     <id column="goods_type_id" jdbcType="INTEGER" property="goodsTypeId" />
     <result column="father_type_id" jdbcType="INTEGER" property="fatherTypeId" />
+    <result column="isLeaf" jdbcType="BIT" property="isleaf" />
     <result column="typeName" jdbcType="VARCHAR" property="typename" />
     <result column="sortOrder" jdbcType="INTEGER" property="sortorder" />
   </resultMap>
@@ -66,7 +67,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    goods_type_id, father_type_id, typeName, sortOrder
+    goods_type_id, father_type_id, isLeaf, typeName, sortOrder
   </sql>
   <select id="selectByExample" parameterType="com.lbyx.pojo.GoodsTypeQuery" resultMap="BaseResultMap">
     select
@@ -83,7 +84,7 @@
     </if>
   </select>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
-    select 
+    select
     <include refid="Base_Column_List" />
     from tb_goods_type
     where goods_type_id = #{goodsTypeId,jdbcType=INTEGER}
@@ -99,10 +100,10 @@
     </if>
   </delete>
   <insert id="insert" parameterType="com.lbyx.pojo.GoodsType">
-    insert into tb_goods_type (goods_type_id, father_type_id, typeName, 
-      sortOrder)
-    values (#{goodsTypeId,jdbcType=INTEGER}, #{fatherTypeId,jdbcType=INTEGER}, #{typename,jdbcType=VARCHAR}, 
-      #{sortorder,jdbcType=INTEGER})
+    insert into tb_goods_type (goods_type_id, father_type_id, isLeaf,
+    typeName, sortOrder)
+    values (#{goodsTypeId,jdbcType=INTEGER}, #{fatherTypeId,jdbcType=INTEGER}, #{isleaf,jdbcType=BIT},
+    #{typename,jdbcType=VARCHAR}, #{sortorder,jdbcType=INTEGER})
   </insert>
   <insert id="insertSelective" parameterType="com.lbyx.pojo.GoodsType">
     insert into tb_goods_type
@@ -112,6 +113,9 @@
       </if>
       <if test="fatherTypeId != null">
         father_type_id,
+      </if>
+      <if test="isleaf != null">
+        isLeaf,
       </if>
       <if test="typename != null">
         typeName,
@@ -126,6 +130,9 @@
       </if>
       <if test="fatherTypeId != null">
         #{fatherTypeId,jdbcType=INTEGER},
+      </if>
+      <if test="isleaf != null">
+        #{isleaf,jdbcType=BIT},
       </if>
       <if test="typename != null">
         #{typename,jdbcType=VARCHAR},
@@ -150,6 +157,9 @@
       <if test="record.fatherTypeId != null">
         father_type_id = #{record.fatherTypeId,jdbcType=INTEGER},
       </if>
+      <if test="record.isleaf != null">
+        isLeaf = #{record.isleaf,jdbcType=BIT},
+      </if>
       <if test="record.typename != null">
         typeName = #{record.typename,jdbcType=VARCHAR},
       </if>
@@ -164,9 +174,10 @@
   <update id="updateByExample" parameterType="map">
     update tb_goods_type
     set goods_type_id = #{record.goodsTypeId,jdbcType=INTEGER},
-      father_type_id = #{record.fatherTypeId,jdbcType=INTEGER},
-      typeName = #{record.typename,jdbcType=VARCHAR},
-      sortOrder = #{record.sortorder,jdbcType=INTEGER}
+    father_type_id = #{record.fatherTypeId,jdbcType=INTEGER},
+    isLeaf = #{record.isleaf,jdbcType=BIT},
+    typeName = #{record.typename,jdbcType=VARCHAR},
+    sortOrder = #{record.sortorder,jdbcType=INTEGER}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -176,6 +187,9 @@
     <set>
       <if test="fatherTypeId != null">
         father_type_id = #{fatherTypeId,jdbcType=INTEGER},
+      </if>
+      <if test="isleaf != null">
+        isLeaf = #{isleaf,jdbcType=BIT},
       </if>
       <if test="typename != null">
         typeName = #{typename,jdbcType=VARCHAR},
@@ -189,8 +203,9 @@
   <update id="updateByPrimaryKey" parameterType="com.lbyx.pojo.GoodsType">
     update tb_goods_type
     set father_type_id = #{fatherTypeId,jdbcType=INTEGER},
-      typeName = #{typename,jdbcType=VARCHAR},
-      sortOrder = #{sortorder,jdbcType=INTEGER}
+    isLeaf = #{isleaf,jdbcType=BIT},
+    typeName = #{typename,jdbcType=VARCHAR},
+    sortOrder = #{sortorder,jdbcType=INTEGER}
     where goods_type_id = #{goodsTypeId,jdbcType=INTEGER}
   </update>
   <insert id="insertBatchSelective" parameterType="java.util.List">
@@ -202,6 +217,9 @@
       <if test="list[0].fatherTypeId!=null">
         father_type_id,
       </if>
+      <if test="list[0].isleaf!=null">
+        isLeaf,
+      </if>
       <if test="list[0].typename!=null">
         typeName,
       </if>
@@ -209,7 +227,7 @@
         sortOrder,
       </if>
     </trim>
-     values 
+    values
     <foreach collection="list" index="index" item="item" separator=",">
       <trim prefix=" (" suffix=")" suffixOverrides=",">
         <if test="item.goodsTypeId!=null">
@@ -217,6 +235,9 @@
         </if>
         <if test="item.fatherTypeId!=null">
           #{item.fatherTypeId,jdbcType=INTEGER},
+        </if>
+        <if test="item.isleaf!=null">
+          #{item.isleaf,jdbcType=BIT},
         </if>
         <if test="item.typename!=null">
           #{item.typename,jdbcType=VARCHAR},
@@ -234,6 +255,9 @@
         <if test="item.fatherTypeId!=null">
           father_type_id=#{item.fatherTypeId,jdbcType=INTEGER},
         </if>
+        <if test="item.isleaf!=null">
+          isLeaf=#{item.isleaf,jdbcType=BIT},
+        </if>
         <if test="item.typename!=null">
           typeName=#{item.typename,jdbcType=VARCHAR},
         </if>
@@ -241,7 +265,7 @@
           sortOrder=#{item.sortorder,jdbcType=INTEGER},
         </if>
       </set>
-      where 
+      where
       goods_type_id = #{item.goodsTypeId,jdbcType=INTEGER}
     </foreach>
   </update>

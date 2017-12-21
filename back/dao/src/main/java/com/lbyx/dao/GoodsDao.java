@@ -3,9 +3,11 @@ package com.lbyx.dao;
 import com.lbyx.pojo.Goods;
 import com.lbyx.pojo.GoodsQuery;
 import org.apache.ibatis.annotations.Param;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
+@Repository
 public interface GoodsDao {
     long countByExample(GoodsQuery example);
 

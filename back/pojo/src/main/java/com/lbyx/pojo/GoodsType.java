@@ -5,6 +5,8 @@ public class GoodsType {
 
     private Integer fatherTypeId;
 
+    private Boolean isleaf;
+
     private String typename;
 
     private Integer sortorder;
@@ -23,6 +25,14 @@ public class GoodsType {
 
     public void setFatherTypeId(Integer fatherTypeId) {
         this.fatherTypeId = fatherTypeId;
+    }
+
+    public Boolean getIsleaf() {
+        return isleaf;
+    }
+
+    public void setIsleaf(Boolean isleaf) {
+        this.isleaf = isleaf;
     }
 
     public String getTypename() {

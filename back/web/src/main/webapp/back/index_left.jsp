@@ -74,7 +74,7 @@
       <li>
         <span>用户管理</span>
         <ul>
-          <li data-options="attributes:{'url':'staff_add'}">用户列表</li>
+          <li data-options="attributes:{'url':'user_list'}">用户列表</li>
         </ul>
       </li>
       <li>

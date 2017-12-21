@@ -29,16 +29,17 @@
   <thead>
     <tr>
       <th data-options="field:'ck',checkbox:true"></th>
-      <th data-options="field:'id',width:60">商品ID</th>
-      <th data-options="field:'title',width:200">商品标题</th>
-      <th data-options="field:'cid',width:100">叶子类目</th>
-      <th data-options="field:'sellPoint',width:100">卖点</th>
-      <th data-options="field:'price',width:70,align:'right'">价格</th>
-      <th data-options="field:'num',width:70,align:'right'">库存数量</th>
-      <th data-options="field:'barcode',width:100">条形码</th>
+      <th data-options="field:'goodsId',width:60">商品ID</th>
+      <th data-options="field:'goodsname',width:200">商品名称</th>
+      <th data-options="field:'goodsTypeId',width:100">商品分类</th>
+      <th data-options="field:'goodsdesc',width:100">简单描述</th>
+      <th data-options="field:'goodsprice',width:70,align:'right'">价格</th>
+      <th data-options="field:'goodsnumber',width:70,align:'right'">库存数量</th>
+      <th data-options="field:'provider',width:100">生产厂家</th>
       <th data-options="field:'status',width:60,align:'center'">状态</th>
-      <th data-options="field:'created',width:130,align:'center'">创建日期</th>
-      <th data-options="field:'updated',width:130,align:'center'">更新日期</th>
+      <th data-options="field:'givepoints',width:60,align:'center'">积分值</th>
+      <th data-options="field:'onTime',width:130,align:'center'">创建日期</th>
+      <th data-options="field:'offTime',width:130,align:'center'">更新日期</th>
     </tr>
   </thead>
 </table>
@@ -47,6 +48,8 @@
      style="width:80%;height:80%;padding:10px;">
 </div>
 <script>
+
+
 
     function getSelectionsIds() {
         var itemList = $("#itemList");
@@ -58,6 +61,9 @@
         ids = ids.join(",");
         return ids;
     }
+
+
+    $(function () {
 
     var toolbar = [{
         text: '新增',
@@ -200,7 +206,7 @@
         }
     }];
 
-    $(function () {
+//    $(function () {
         $('#itemList').datagrid({
             url: '',   // 指定后台的一个 controller地址
             fit: true,          // 自动填充父控件

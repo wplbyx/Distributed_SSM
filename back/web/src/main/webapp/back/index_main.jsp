@@ -28,7 +28,7 @@
 
   <!-- 顶部 -->
   <div data-options="region:'north'"
-       href="top.jsp"
+       href="index_top.jsp"
        style="height:100px">
   </div>
 
@@ -40,19 +40,19 @@
 
   <!-- 右边 -->
   <div data-options="region:'east',split:true" title="工具栏"
-       href="right.jsp"
+       href="index_right.jsp"
        style="width:200px;">
   </div>
 
   <!-- 左边 -->
   <div data-options="region:'west',split:true" title="选择栏"
-       href="left.jsp"
+       href="index_left.jsp"
        style="width:260px;">
   </div>
 
   <!-- 中间 -->
   <div data-options="region:'center',title:'',iconCls:'icon-ok'"
-       href="center.jsp"
+       href="index_center.jsp"
        style="overflow:hidden">
   </div>
 

@@ -224,6 +224,66 @@ public class GoodsTypeQuery {
             return (Criteria) this;
         }
 
+        public Criteria andIsleafIsNull() {
+            addCriterion("isLeaf is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsleafIsNotNull() {
+            addCriterion("isLeaf is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsleafEqualTo(Boolean value) {
+            addCriterion("isLeaf =", value, "isleaf");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsleafNotEqualTo(Boolean value) {
+            addCriterion("isLeaf <>", value, "isleaf");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsleafGreaterThan(Boolean value) {
+            addCriterion("isLeaf >", value, "isleaf");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsleafGreaterThanOrEqualTo(Boolean value) {
+            addCriterion("isLeaf >=", value, "isleaf");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsleafLessThan(Boolean value) {
+            addCriterion("isLeaf <", value, "isleaf");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsleafLessThanOrEqualTo(Boolean value) {
+            addCriterion("isLeaf <=", value, "isleaf");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsleafIn(List<Boolean> values) {
+            addCriterion("isLeaf in", values, "isleaf");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsleafNotIn(List<Boolean> values) {
+            addCriterion("isLeaf not in", values, "isleaf");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsleafBetween(Boolean value1, Boolean value2) {
+            addCriterion("isLeaf between", value1, value2, "isleaf");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsleafNotBetween(Boolean value1, Boolean value2) {
+            addCriterion("isLeaf not between", value1, value2, "isleaf");
+            return (Criteria) this;
+        }
+
         public Criteria andTypenameIsNull() {
             addCriterion("typeName is null");
             return (Criteria) this;
