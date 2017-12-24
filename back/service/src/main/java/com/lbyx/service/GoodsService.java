@@ -1,7 +1,9 @@
 package com.lbyx.service;
 
+import com.lbyx.pojo.Goods;
 import pojo.EasyUITreeNode;
 import pojo.EasyUiDataGrid;
+import pojo.GoodsAddInfo;
 
 import java.util.List;
 
@@ -9,6 +11,9 @@ import java.util.List;
  *  Created by Administrator on 2017/12/19 0019.
  */
 public interface GoodsService {
+
+    // 将 GoodsAddInfo 实体类里的数据转换成 Goods 类
+    Goods goodsAddInfoToGoods(GoodsAddInfo goodsAddInfo);
 
     // 获得商品类目的 Service，根据类目节点的父类型 id 查询其这类目，并返回 EasyUI 需要的类型的 entity
     List<EasyUITreeNode> getEasyUiTreeNode(long id);

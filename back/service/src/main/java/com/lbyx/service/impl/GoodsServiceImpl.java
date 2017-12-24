@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import pojo.EasyUITreeNode;
 import pojo.EasyUiDataGrid;
+import pojo.GoodsAddInfo;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -62,4 +63,20 @@ public class GoodsServiceImpl implements GoodsService {
         return easyUiDataGrid;
     }
 
+
+    @Override
+    public Goods goodsAddInfoToGoods(GoodsAddInfo goodsAddInfo){
+        Goods goods = new Goods();
+        goods.setGoodsTypeId(goodsAddInfo.getGoodsTypeId());
+        goods.setGoodsname(goodsAddInfo.getGoodsname());
+        goods.setGoodsdesc(goodsAddInfo.getGoodsdesc());
+        goods.setGoodsprice(goodsAddInfo.getGoodsprice());
+        goods.setGoodsnumber(goodsAddInfo.getGoodsnumber());
+        goods.setProvider(goodsAddInfo.getProvider());
+        goods.setOntime(goodsAddInfo.getOntime());
+        goods.setOfftime(goodsAddInfo.getOfftime());
+        goods.setStatus(goodsAddInfo.getStatus());
+        goods.setGivepoints(goodsAddInfo.getGivepoints());
+        return goods;
+    }
 }
