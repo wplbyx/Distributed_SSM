@@ -1,6 +1,5 @@
 package com.lbyx.controller;
 
-import com.lbyx.pojo.Goods;
 import com.lbyx.service.GoodsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -10,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import pojo.EasyUITreeNode;
 import pojo.EasyUiDataGrid;
+import pojo.GoodsAddInfo;
 
 import java.util.List;
 
@@ -49,8 +49,9 @@ public class GoodsController {
         return goodsListDataGrid;
     }
 
+    @ResponseBody
     @RequestMapping(value = "/add", method = RequestMethod.POST)
-    public String goodsAdd(Goods goods){
+    public String goodsAdd(GoodsAddInfo goodsAddInfo){
         System.out.println("[GoodsController method]: goodsAdd()->  successful");
         return null;
     }
