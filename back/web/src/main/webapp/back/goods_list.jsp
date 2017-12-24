@@ -208,7 +208,7 @@
 
 //    $(function () {
         $('#itemList').datagrid({
-            url: '',   // 指定后台的一个 controller地址
+            url: '/goods/list',   // 指定后台的一个 controller地址
             fit: true,          // 自动填充父控件
             toolbar:toolbar,
             method:'get',
