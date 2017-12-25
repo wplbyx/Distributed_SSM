@@ -12,12 +12,11 @@ import java.util.List;
  */
 public interface GoodsService {
 
-    // 将 GoodsAddInfo 实体类里的数据转换成 Goods 类
-    Goods goodsAddInfoToGoods(GoodsAddInfo goodsAddInfo);
-
     // 获得商品类目的 Service，根据类目节点的父类型 id 查询其这类目，并返回 EasyUI 需要的类型的 entity
     List<EasyUITreeNode> getEasyUiTreeNode(long id);
 
     // 获得商品数据并且转换成 Datagrid 格式的数据，提供给 EasyUI后台使用
     EasyUiDataGrid getGoodsListDataGrid(int page, int size);
+
+    void AddGoods(GoodsAddInfo goodsAddInfo);
 }

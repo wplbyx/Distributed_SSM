@@ -10,6 +10,7 @@ import com.lbyx.pojo.User;
 import com.lbyx.pojo.UserQuery;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import pojo.GoodsAddInfo;
 
 import java.util.List;
 
@@ -19,17 +20,22 @@ import java.util.List;
 public class GoodsServiceTest extends BaseSpringJunit4Test {
 
     @Autowired
-    private GoodsDao goodsDao;
-
+    private GoodsService goodsService;
 
     @Test
-    public void PageTest(){
-        GoodsQuery goodsQuery = new GoodsQuery();
-        PageHelper.startPage(1, 10);
-        List<Goods> goodss = goodsDao.selectByExample(goodsQuery);
-        for (Goods goods : goodss) {
-            System.out.println(goods);
-        }
+    public void testGoodsAdd(){
+        GoodsAddInfo goodsAddInfo = new GoodsAddInfo();
+        goodsAddInfo.setDesc("fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff");
+        goodsAddInfo.setGoodsTypeId(178); // 键盘 三级类目
+        goodsAddInfo.setGoodsname("ffffff");
+        goodsAddInfo.setGoodsdesc("fffffffffffffffffffffffff");
+        goodsAddInfo.setGoodsprice(100.0f);
+        goodsAddInfo.setProvider("f");
+
+        // 调用测试类：
+        goodsService.AddGoods(goodsAddInfo);
+
+
     }
 
 

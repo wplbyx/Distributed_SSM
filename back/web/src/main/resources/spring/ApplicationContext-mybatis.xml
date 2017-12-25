@@ -17,7 +17,7 @@
 
     <!-- =============  数据源的配置，Spring 整合 Mybatis 后，数据源的配置交给 Spring  ============= -->
     <!--  配置数据库相关参数 properties 的属性   -->
-    <context:property-placeholder location="classpath:*.properties"/>
+    <context:property-placeholder location="classpath:jdbc.properties"/>
 
     <!--  配置 c3p0 数据库连接池， 这里面的数据参数需要在 jdbc.properties 文件里配置 -->
     <bean id="dataSource" class="com.alibaba.druid.pool.DruidDataSource" destroy-method="close">

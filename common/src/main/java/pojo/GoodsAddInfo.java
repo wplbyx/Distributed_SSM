@@ -19,7 +19,7 @@ public class GoodsAddInfo {
     private Byte status;          // 商品的状态 在售，下架，删除
     private Integer givepoints;   // 商品价值的积分
 
-    private List<String> desc;    // 商品的详细描述
+    private String desc;    // 商品的详细描述
     private List<String> img;     // 商品的图片列表
 
     public Integer getGoodsId() {
@@ -110,11 +110,11 @@ public class GoodsAddInfo {
         this.givepoints = givepoints;
     }
 
-    public List<String> getDesc() {
+    public String getDesc() {
         return desc;
     }
 
-    public void setDesc(List<String> desc) {
+    public void setDesc(String desc) {
         this.desc = desc;
     }
 

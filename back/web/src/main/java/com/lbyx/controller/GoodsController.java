@@ -52,6 +52,7 @@ public class GoodsController {
     @ResponseBody
     @RequestMapping(value = "/add", method = RequestMethod.POST)
     public String goodsAdd(GoodsAddInfo goodsAddInfo){
+        goodsService.AddGoods(goodsAddInfo);
         System.out.println("[GoodsController method]: goodsAdd()->  successful");
         return null;
     }
