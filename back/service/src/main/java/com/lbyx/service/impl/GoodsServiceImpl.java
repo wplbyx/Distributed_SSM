@@ -14,9 +14,9 @@ import org.springframework.transaction.annotation.Transactional;
 import pojo.EasyUITreeNode;
 import pojo.EasyUiDataGrid;
 import pojo.GoodsAddInfo;
+import util.DateUtil;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 
@@ -90,13 +90,32 @@ public class GoodsServiceImpl implements GoodsService {
     public void AddGoods(GoodsAddInfo goodsAddInfo) {
         Goods goods = goodsAddInfoToGoods(goodsAddInfo);
         int insert = goodsDao.insert(goods);
-        System.out.println("the return num of mathord insert is "+ insert);
+        // System.out.println("the return num of mathord insert is "+ insert);
+
+        // 创建查询条件对象：
+        GoodsQuery goodsQuery = new GoodsQuery();
+        GoodsQuery.Criteria criteria = goodsQuery.createCriteria();
+
+        // 添加查询条件：
+        criteria.andGoodsTypeIdEqualTo(goods.getGoodsTypeId());
+        criteria.andGoodsdescEqualTo(goods.getGoodsdesc());
+        criteria.andGoodsnameEqualTo(goods.getGoodsname());
+        criteria.andGoodspriceEqualTo(goods.getGoodsprice());
+
+        // 执行查询条件：得到刚插入的记录的主键
+        List<Goods> goodss = goodsDao.selectByExample(goodsQuery);
+
+        Integer newId = goodss.get(0).getGoodsId();
 
         GoodsDesc goodsDesc = new GoodsDesc();
         goodsDesc.setGoodsdesc(goodsAddInfo.getGoodsdesc());
-        goodsDesc.setGoodsId(insert);
-//        goodsDesc.setUploadtime(Date);
+        goodsDesc.setGoodsId(newId);
+        goodsDesc.setUploadtime(DateUtil.getNowDate());
         goodsDescDao.insert(goodsDesc);
+
+        // 事务的测试：手动抛出一个异常测试数据库插入的结果：
+        //  抛出 RuntimeException 异常，触发事物，回滚
+        //throw new RuntimeException("test");
 
     }
 
